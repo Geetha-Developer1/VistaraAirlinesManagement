@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeMenu";
+   
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BlueWings Airlines</title>
+    <link href="~/Content/Mystyles/adminhome.css" rel="stylesheet" />
+</head>
+<body>
+
+    <header>
+        <div class="logo">✈ BLUEWINGS AIRLINES</div>
+
+        <nav>
+            @Html.ActionLink("Home", "EmployeeHome")
+            @Html.ActionLink("Menu", "EmployeeMenu")
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+            <p class="tagline">WELCOME TO BLUEWINGS AIRLINES</p>
+            <p class="description">
+
+            </p>
+            <h5 style="color:blueviolet"> @Html.ActionLink("Available Flights", "ShowFlights")</h5>
+            <h5 style="color:blueviolet"> @Html.ActionLink("Book Ticket", "BookTicket")</h5>
+            <h5 style="color:blueviolet"> @Html.ActionLink("Cancel Ticket", "CancelTicket")</h5>
+            <h5 style="color:blueviolet"> @Html.ActionLink("Home", "EmployeeHome")</h5>
+        </div>
+
+        <div class="bottom-text">
+            YOUR JOURNEY BEGINS HERE
+        </div>
+    </section>
+
+</body>
+</html>

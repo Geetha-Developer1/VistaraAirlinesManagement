@@ -1,0 +1,201 @@
+﻿@model Tuple < List<VistaraAirlinesManagement.Models.Flights>, List<VistaraAirlinesManagement.Models.FlightStatus>>
+    @{
+        ViewBag.Title = "ShowFlights";
+        Layout = "~/Views/Shared/Mylayout.cshtml";
+    }
+
+    <h2>ShowFlights</h2>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Show Flight Details</title>
+
+        <style>
+            body {
+                margin: 0;
+                padding: 20px;
+                font-family: Georgia, "Times New Roman", serif;
+                background-color: #ffffff;
+            }
+
+            /* Main container */
+            .container {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            /* Flight banner */
+            .banner {
+                width: 400px;
+                height: 90px;
+                margin: 0 auto;
+                overflow: hidden;
+            }
+
+                .banner img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+            /* Close link */
+            .close-link {
+                position: static;
+                display: inline-block;
+                margin: 15px 20px;
+                color: blue;
+                text-decoration: underline;
+                font-size: 16px;
+            }
+            .navigation-links {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 850px;
+                margin: 20px auto;
+            }
+
+            .close-link {
+                margin: 0;
+                font-size: 16px;
+            }
+
+            /* Table styling */
+            .flight-table {
+                width: 850px;
+                margin: 0 auto 27px auto;
+                border: 1px solid #316b69;
+                border-spacing: 0;
+                background-color: #ffffff;
+            }
+
+                .flight-table th {
+                    background-color: #326765;
+                    color: white;
+                    padding: 16px 8px;
+                    text-align: center;
+                    font-size: 17px;
+                    white-space: nowrap;
+                }
+
+                .flight-table td {
+                    background-color: #ffffff;
+                    color: #444444;
+                    padding: 17px 8px;
+                    text-align: center;
+                    font-size: 16px;
+                    white-space: nowrap;
+                }
+
+                /* Footer row */
+                .flight-table tfoot td {
+                    background-color: #326765;
+                    color: white;
+                    text-align: center;
+                    padding: 17px;
+                }
+
+            /* Responsive design */
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <!-- Flight Banner -->
+            <div class="banner">
+                <img src="~/Content/Mystyles/american-airlines.jpg" alt="Flight Banner">
+            </div>
+
+            <!-- Close Link -->
+            <div class="navigation-links">
+                <h5 class="close-link">
+                    @Html.ActionLink("Book Ticket", "BookTicket")
+                </h5>
+
+                <h5 class="close-link">
+                    @Html.ActionLink("Home", "EmployeeHome")
+                </h5>
+            </div>
+
+            <!-- Flight Information Table -->
+            <table class="flight-table">
+
+                <thead>
+                    <tr>
+                        <th>FCode</th>
+                        <th>FName</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Arrival</th>
+                        <th>Departure</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Item1)
+                    {
+                        <tr>
+                            <td>@item.Fcode</td>
+                            <td>@item.Fname</td>
+                            <td>@item.Source</td>
+                            <td>@item.Destination</td>
+                            <td>@item.Arrival</td>
+                            <td>@item.Departure</td>
+                        </tr>
+                    }
+                </tbody>
+
+
+                <tfoot>
+                    <tr>
+                        <td colspan="6">1</td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+
+            <!-- Flight Fare Details Table -->
+            <table class="flight-table">
+                <thead>
+                    <tr>
+                        <th>FCode</th>
+                        <th>Exe_Seats</th>
+                        <th>Exe_Fare</th>
+                        <th>Eco_Seats</th>
+                        <th>Eco_Fare</th>
+                        <th>Bus_Seats</th>
+                        <th>Bus_Fare</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Item2)
+                    {
+                        <tr>
+                            <td>@item.Fcode</td>
+                            <td>@item.Exe_Seats</td>
+                            <td>@item.Exe_Fare</td>
+                            <td>@item.Eco_Seats</td>
+                            <td>@item.Eco_Fare</td>
+                            <td>@item.Bus_Seats</td>
+                            <td>@item.Bus_Fare</td>
+                        </tr>
+                    }
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="7">1</td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
+
+    </body>
+</html>

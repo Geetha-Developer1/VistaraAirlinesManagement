@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "AdminHome";
+}
+
+<!--<h2>AdminHome</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airline Home Page</title>
+
+   <link href="~/Content/Mystyles/StyleSheet1.css" />
+</head>
+
+<body>
+
+    <div class="header">-->
+<!-- Airline Logo -->
+<!--<img src="~/Content/Mystyles/american-airlines.jpg" class="logo"
+     alt="Airline Image">-->
+<!-- Navigation Links -->
+<!--<div class="navbar">-->
+
+
+            @*@Html.ActionLink("Home", "AdminHome")
+            @Html.ActionLink("Menu", "AdminMenu")*@
+           <!--<a href="#">ContactUs</a>
+            <a href="#">SighOut</a>
+
+
+        </div>
+
+    </div>
+
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BlueWings Airlines</title>
+    <link href="~/Content/Mystyles/adminhome.css" rel="stylesheet" />
+</head>
+<body>
+
+    <header>
+        <div class="logo">✈ BLUEWINGS AIRLINES</div>
+
+        <nav>
+            @Html.ActionLink("Home", "AdminHome")
+            @Html.ActionLink("Menu", "AdminMenu")
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+
+    </header>
+
+    <section class="hero">
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+            <p class="tagline">WELCOME TO BLUEWINGS AIRLINES</p>
+
+            <h1>
+                Discover The World<br>
+                With <span>BlueWings Airlines</span>
+            </h1>
+
+            <p class="description">
+                Experience extraordinary journeys,
+                premium comfort and unforgettable destinations.
+            </p>
+
+
+        </div>
+
+        <div class="bottom-text">
+            YOUR JOURNEY BEGINS HERE
+        </div>
+    </section>
+
+</body>
+</html>

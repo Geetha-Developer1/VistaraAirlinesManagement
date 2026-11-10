@@ -1,0 +1,289 @@
+﻿
+@model Tuple<VistaraAirlinesManagement.Models.Bookings, VistaraAirlinesManagement.Models.PassengerDetails>
+@{
+    ViewBag.Title = "CancelTicket";
+    Layout = "~/Views/Shared/Mylayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#BookingId").change(function () {
+
+                var id = $(this).val();
+
+                if (id == "") {
+                    return;
+                }
+
+                $.ajax({
+
+                    url: '',
+
+                    type: 'GET',
+
+                    data: { id: id },
+
+                    success: function (data) {
+
+                        if (data != null) {
+
+                            $("#Item1_Fcode").val(data.Fcode);
+                            $("#Item1_FlyDate").val(data.FlyDate);
+                            $("#Item1_Pass_Name").val(data.Pass_Name);
+                            $("#Item1_Address").val(data.Address);
+                            $("#Item1_Phone").val(data.Phone);
+                            $("#Item1_Class").val(data.Class);
+                            $("#Item1_Seatno").val(data.Seatno);
+                            $("#Item1_Fare").val(data.Fare);
+
+                            $("#Item2_Email").val(data.Email);
+                            $("#Item2_Amount").val(data.Amount);
+
+                        }
+                        else {
+                            alert("Booking details not found");
+                        }
+                        error: function () {
+                            alert("Error fetching booking details");
+                        }
+
+                    }
+                });
+
+            });
+        });
+    </script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flight Management System</title>
+    <link href="~/Content/Mystyles/crudflight.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT IMAGE SECTION -->
+
+        <div class="left-panel">
+
+            <div class="logo">
+                ✈ BLUE<span>WINGS</span>
+            </div>
+
+            <div class="welcome">
+                <h1>
+                    Your Journey<br>
+                    Begins Here.
+                </h1>
+
+                <p>
+                    Manage your flights with ease.
+                    modify flight schedules, manage seat
+                    availability and configure ticket fares
+                    in one place.
+                </p>
+            </div>
+
+            <div class="left-footer">
+                © 2026 BlueWings Airlines. All Rights Reserved.
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT FORM SECTION -->
+
+        <div class="right-panel">
+
+            <div class="topbar">
+                <h3>Flight Management</h3>
+
+                <div class="admin">
+                    Employee
+                </div>
+                <div class="admin">
+                    @Html.ActionLink("Home", "EmployeeHome")
+                    @Html.ActionLink("Menu", "EmployeeMenu")
+                </div>
+
+            </div>
+
+            <div class="form-heading">
+                <h2>Cancel Flight</h2>
+
+                <p>
+                    Please enter the flight information below.
+                </p>
+            </div>
+
+            <!-- FLIGHT INFORMATION -->
+
+            <h3 class="section-title">
+                ✈ Flight & Passenger Information
+            </h3>
+
+            @if (Model != null && Model.Item1 != null && Model.Item2 != null)
+            {
+                using (Html.BeginForm("CancelTicket", "Employ", FormMethod.Post))
+                {
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            Booking ID
+                           @Html.DropDownList("BookingId",
+                            (SelectList)ViewBag.bkid,"Select Booking ID",
+                                    new { @class = "form-control" })
+
+                        </div>
+
+                        <div class="form-group">
+                            Flight Code
+                                @Html.TextBoxFor(x => x.Item1.Fcode,
+                                    new { @readonly = "readonly" })
+
+                        </div>
+
+                        <div class="form-group">
+                            Address
+                            @Html.TextBoxFor(x => x.Item1.Address,
+                                new { @readonly = "readonly" })
+
+                        </div>
+
+                        <div class="form-group">
+
+                            Passenger Name
+                                @Html.TextBoxFor(x => x.Item1.Pass_Name,
+                                    new { @readonly = "readonly" })
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIME INFORMATION -->
+
+                    <h3 class="section-title">
+                        🕒 Schedule Information
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            
+                            Flight Date
+                            @Html.TextBoxFor(x => x.Item1.FlyDate,
+                                new { @readonly = "readonly" })
+
+                        </div>
+
+                        <div class="form-group">
+                            
+                            Cancellation Date
+                            <input type="date"
+                                   name="Canceldate"
+                                   value="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                   class="form-control" />
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FARE INFORMATION -->
+
+                    <h3 class="section-title">
+                        💺 Seat & Fare Details
+                    </h3>
+
+                    <div class="fare-grid">
+
+                        <div class="fare-card">
+
+                            <h4>Class & Seat Details</h4>
+
+                            Class
+                            @Html.TextBoxFor(x => x.Item1.Class,
+                                new { @readonly = "readonly" })
+
+                            Seat Number
+                                @Html.TextBoxFor(x => x.Item1.Seatno,
+                                    new { @readonly = "readonly" })
+
+                        </div>
+
+
+                        <div class="fare-card">
+
+                            <h4>Amount Details</h4>
+                            Amount
+                            @Html.TextBoxFor(x => x.Item2.Amount,
+                                new { @readonly = "readonly" })
+                            Fare
+                            @Html.TextBoxFor(x => x.Item1.Fare,
+                                new { @readonly = "readonly" })
+
+
+
+                        </div>
+
+
+                        <div class="fare-card">
+
+                            <h4>Email & Phone Details</h4>
+
+
+                            Email
+                            @Html.TextBoxFor(x => x.Item2.Email,
+                                new { @readonly = "readonly" })
+                            Phone
+                            @Html.TextBoxFor(x => x.Item1.Phone,
+                                new { @readonly = "readonly" })
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="buttons">
+
+                        <button type="submit" class="Delete"
+                                onclick="return confirm('Are you sure you want to delete this flight?')">
+                            Cancel Ticket
+                        </button>
+
+                        <button type="reset" class="cancel">Cancel </button>
+
+                    </div>
+                }
+
+            }
+
+
+            </div>
+
+    </div>
+    @if (TempData["status"] != null)
+    {
+        <script>alert('@TempData["status"]');</script>
+    }
+</body>
+</html>
+
+

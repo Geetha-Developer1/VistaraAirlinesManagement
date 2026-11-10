@@ -1,0 +1,273 @@
+﻿@model Tuple<VistaraAirlinesManagement.Models.Flights,VistaraAirlinesManagement.Models.FlightStatus>
+@{
+    ViewBag.Title = "ModifyFlight";
+    Layout = "~/Views/Shared/Mylayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+    <script>
+    $(function () {
+
+        console.log("jQuery loaded successfully");
+
+        $(document).on("change", "#Fcode", function () {
+
+            var code = $(this).val();
+
+            console.log("Selected Fcode:", code);
+
+            if (!code) {
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("GetFlightDetails", "Admin")',
+                type: 'GET',
+                dataType: 'json',
+                data: { id: code },
+
+                success: function (data) {
+
+                    console.log("Controller response:", data);
+
+                    if (data == null) {
+                        alert("No details found for this flight code.");
+                        return;
+                    }
+
+                    $("#Item1_Source").val(data.Source);
+                    $("#Item1_Destination").val(data.Destination);
+                    $("#Item1_Arrival").val(data.Arrival);
+                    $("#Item1_Departure").val(data.Departure);
+                    $("#Item1_Fname").val(data.Fname);
+
+                    $("#Item2_Exe_Seats").val(data.Exe_Seats);
+                    $("#Item2_Exe_Fare").val(data.Exe_Fare);
+
+                    $("#Item2_Eco_Seats").val(data.Eco_Seats);
+                    $("#Item2_Eco_Fare").val(data.Eco_Fare);
+
+                    $("#Item2_Bus_Seats").val(data.Bus_Seats);
+                    $("#Item2_Bus_Fare").val(data.Bus_Fare);
+
+                    console.log("All controls filled successfully");
+                },
+
+                error: function (xhr, status, error) {
+
+                    console.log("AJAX error:", error);
+                    console.log("Response:", xhr.responseText);
+
+                    alert("Unable to retrieve flight details.");
+                }
+            });
+
+        });
+
+    });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flight Management System</title>
+    <link href="~/Content/Mystyles/crudflight.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT IMAGE SECTION -->
+
+        <div class="left-panel">
+
+            <div class="logo">
+                ✈ BLUE<span>WINGS</span>
+            </div>
+
+            <div class="welcome">
+                <h1>
+                    Your Journey<br>
+                    Begins Here.
+                </h1>
+
+                <p>
+                    Manage your flights with ease.
+                    modify flight schedules, manage seat
+                    availability and configure ticket fares
+                    in one place.
+                </p>
+            </div>
+
+            <div class="left-footer">
+                © 2026 BlueWings Airlines. All Rights Reserved.
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT FORM SECTION -->
+
+        <div class="right-panel">
+
+            <div class="topbar">
+                <h3>Flight Management</h3>
+
+                <div class="admin">
+                    ADMIN
+                </div>
+                <div class="admin">
+                    @Html.ActionLink("Home", "AdminHome")
+                    @Html.ActionLink("Menu", "AdminMenu")
+                </div>
+
+            </div>
+
+            <div class="form-heading">
+                <h2>Modify Flight</h2>
+
+                <p>
+                    Please enter the flight information below.
+                </p>
+            </div>
+
+                <!-- FLIGHT INFORMATION -->
+
+                <h3 class="section-title">
+                    ✈ Flight Information
+                </h3>
+
+                @using (Html.BeginForm("ModifyFlight", "Admin", FormMethod.Post))
+                {
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Item1.Fcode, "Flight Code")
+                                @Html.DropDownListFor(
+                             x => x.Item1.Fcode,
+                             (SelectList)ViewBag.FlightCodes,
+                             "Flight Code",
+                             new { id = "Fcode" })
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Item1.Source, "Source")
+                            @Html.TextBoxFor(x => x.Item1.Source)
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Item1.Destination, "Destination")
+                            @Html.TextBoxFor(x => x.Item1.Destination)
+
+                        </div>
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(x => x.Item1.Fname, "Flight Name")
+                            @Html.TextBoxFor(x => x.Item1.Fname)
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIME INFORMATION -->
+
+                    <h3 class="section-title">
+                        🕒 Schedule Information
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Item1.Arrival, "Arrival")
+                            @Html.TextBoxFor(x => x.Item1.Arrival)
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Item1.Departure, "Departure")
+                            @Html.TextBoxFor(x => x.Item1.Departure)
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FARE INFORMATION -->
+
+                    <h3 class="section-title">
+                        💺 Seat & Fare Details
+                    </h3>
+
+                    <div class="fare-grid">
+
+                        <div class="fare-card">
+
+                            <h4>Executive Class</h4>
+
+                            @Html.LabelFor(x => x.Item2.Exe_Seats, "Executive Seats")
+                            @Html.TextBoxFor(x => x.Item2.Exe_Seats)
+
+                            @Html.LabelFor(x => x.Item2.Exe_Fare, "Executive Fare")
+                            @Html.TextBoxFor(x => x.Item2.Exe_Fare)
+
+                        </div>
+
+
+                        <div class="fare-card">
+
+                            <h4>Economy Class</h4>
+
+                            @Html.LabelFor(x => x.Item2.Eco_Seats, "Economy Seats")
+                            @Html.TextBoxFor(x => x.Item2.Eco_Seats)
+
+                            @Html.LabelFor(x => x.Item2.Eco_Fare, "Economy Fare")
+                            @Html.TextBoxFor(x => x.Item2.Eco_Fare)
+
+                        </div>
+
+
+                        <div class="fare-card">
+
+                            <h4>General Class</h4>
+
+                            @Html.LabelFor(x => x.Item2.Bus_Seats, "General Seats")
+                            @Html.TextBoxFor(x => x.Item2.Bus_Seats)
+
+                            @Html.LabelFor(x => x.Item2.Bus_Fare, "General Fare")
+                            @Html.TextBoxFor(x => x.Item2.Bus_Fare)
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="buttons">
+
+                        <button type="submit" class="Update"> + Modify Flight</button>
+
+                        <button type="reset" class="cancel">Cancel</button>
+
+                    </div>
+                }
+                <p id="message">@ViewBag.status</p>
+
+           
+
+        </div>
+
+    </div>
+    </body></html>

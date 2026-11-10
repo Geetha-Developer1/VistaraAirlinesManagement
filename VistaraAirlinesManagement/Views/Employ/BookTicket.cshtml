@@ -1,0 +1,208 @@
+﻿@model VistaraAirlinesManagement.Models.BookTicket
+@{
+    ViewBag.Title = "BookTicket";
+    Layout = "~/Views/Shared/Mylayout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flight Management System</title>
+    <link href="~/Content/Mystyles/crudflight.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT IMAGE SECTION -->
+
+        <div class="left-panel">
+
+            <div class="logo">
+                ✈ BLUE<span>WINGS</span>
+            </div>
+
+            <div class="welcome">
+                <h1>
+                    Your Journey<br>
+                    Begins Here.
+                </h1>
+
+                <p>
+                    Manage your flights with ease.
+                    Add flight schedules, manage seat
+                    availability and configure ticket fares
+                    in one place.
+                </p>
+            </div>
+
+            <div class="left-footer">
+                © 2026 BlueWings Airlines. All Rights Reserved.
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT FORM SECTION -->
+
+        <div class="right-panel">
+
+            <div class="topbar">
+                <h3>Flight Management</h3>
+
+                <div class="admin">
+                    Employee
+                </div>
+                <div class="admin">
+                    @Html.ActionLink("Home", "EmployeeHome")
+                    @Html.ActionLink("Menu", "EmployeeMenu")
+                </div>
+
+            </div>
+
+            <div class="form-heading">
+                <h2>Book Flight</h2>
+
+                <p>
+                    Please enter the flight information below.
+                </p>
+            </div>
+            <!-- FLIGHT INFORMATION -->
+
+            <h3 class="section-title">
+                ✈ Flight Information
+            </h3>
+
+            @using (Html.BeginForm("BookTicket", "Employ", FormMethod.Post))
+            {
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Passenger.name, "Flight Name")
+                            @Html.DropDownListFor(m => m.Booking.Fcode, Model.Flights,
+                                "Choose Flight",new { @class = "form-control" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Booking.Phone, "Phone")
+                        @Html.TextBoxFor(x => x.Booking.Phone)
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Booking.Pass_Name, "Passenger Name")
+                        @Html.TextBoxFor(x => x.Booking.Pass_Name)
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.LabelFor(x => x.Booking.Address, "Address")
+                        @Html.TextAreaFor(x => x.Booking.Address)
+
+                    </div>
+
+                </div>
+
+
+                <!-- TIME INFORMATION -->
+
+                <h3 class="section-title">
+                    🕒 Schedule Information
+                </h3>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                       
+                        @Html.LabelFor(x => x.Booking.FlyDate, "Flight Date")
+                        @Html.TextBoxFor(x => x.Booking.FlyDate, "{0:yyyy-MM-dd}",
+         new { type = "date", min = DateTime.Today.ToString("yyyy-MM-dd"), @class = "form-control" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Passenger.Email, "EmailId")
+                        @Html.TextBoxFor(x => x.Passenger.Email)
+
+                    </div>
+
+                </div>
+
+
+                <!-- FARE INFORMATION -->
+
+                <h3 class="section-title">
+                    💺 Seat & Fare Details
+                </h3>
+
+                <div class="fare-grid">
+
+                    <div class="fare-card">
+
+                        <h4>Class Type</h4>
+
+                        @Html.LabelFor(x => x.Booking.Class, "Class")<br />
+                        @Html.DropDownListFor(m => m.Booking.Class, new List<SelectListItem>
+                                               {
+                                               new SelectListItem { Text = "Executive", Value = "Executive" },
+                                               new SelectListItem { Text = "Business", Value = "Business" },
+                                               new SelectListItem { Text = "Economy", Value = "Economy" }
+                                               });
+
+                       
+
+                    </div>
+
+
+                    <div class="fare-card">
+
+                        <h4>Amount & Fare</h4>
+
+                        @Html.LabelFor(x => x.Passenger.Amount, "Amount")
+                        @Html.TextBoxFor(x => x.Passenger.Amount)
+
+                        @Html.LabelFor(x => x.Booking.Fare, "Fare")
+                        @Html.TextBoxFor(x => x.Booking.Fare)
+
+                    </div>
+
+
+                    <div class="fare-card">
+
+                        <h4>SeatNo</h4>
+
+                        @Html.LabelFor(x => x.Booking.Seatno, "SeatNo")
+                        @Html.TextBoxFor(x => x.Booking.Seatno)
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <button type="submit" class="insert">Book Ticket</button>
+
+                    <button type="reset" class="cancel">Cancel</button>
+
+                </div>
+            }
+            <p id="message">@ViewBag.book</p>
+        </div>
+
+    </div>
+</body>
+</html>
